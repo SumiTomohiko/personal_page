@@ -1,0 +1,39 @@
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+body h1 {
+  padding: 8px;
+}
+
+header {
+  background-color: black;
+  margin: 0px;
+}
+
+header h1 {
+  font-size: medium;
+  margin: 0px;
+  padding: 4px;
+  text-align: center;
+}
+
+header a:link, header a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  margin: 0px;
+  padding: 0px 8px 0px 8px;
+}
+
+p {
+  padding: 0px 8px 0px 8px;
+}
+
+/**
+ * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
+ */

@@ -72,5 +72,7 @@ build(INDEX, PARAMS)
 PAGES.each() do [page]
   build(page.path, PARAMS + { 'page_title: page.title })
 end
+css = "style.css"
+copy_file(css, DIR / css)
 
 # vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
