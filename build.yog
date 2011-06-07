@@ -1,0 +1,76 @@
+
+class Page
+  def init(path, title)
+    self.path = path.to_path()
+    self.title = title
+  end
+end
+
+DIR = "html".to_path()
+INDEX = "index.html".to_path()
+PAGES = [
+  Page.new(
+    "freebsd-hdd-encryption.html", "FreeBSD Hard Disk Drive Encryption")]
+
+def eval_var(name, params)
+  return params[name.to_sym()]
+end
+
+def find_title(path)
+  PAGES.each() do [page]
+    if page.path == path
+      return page.title
+    end
+  end
+end
+
+def eval_call(name, arg, params)
+  if name == "link"
+    return "<a href=\"{0}\">{1}</a>".format(arg, find_title(arg))
+  end
+  # name must be "include".
+  return eval_page(arg, params)
+end
+
+def replace_expr(line, m, s)
+  return line.slice(0, m.start()) + s + line.slice(m.end())
+end
+
+def eval(line, params, pos=0)
+  if (m = /@(?<name>[A-Za-z0-9_]+)@/.search(line, pos)) != nil
+    s = replace_expr(line, m, eval_var(m.group("name"), params))
+    return eval(s, params, m.end())
+  end
+  if (m = /@(?<name>[A-Za-z0-9_]+)\(\"(?<str>.*)"\)@/.search(line, pos)) != nil
+    s = eval_call(m.group("name"), m.group("str"), params)
+    return eval(replace_expr(line, m, s), params, m.end())
+  end
+  return line
+end
+
+def eval_page(tmpl, params)
+  s = ""
+  File.open(tmpl) do [fp]
+    while (line = fp.readline()) != nil
+      s << eval(line, params)
+    end
+  end
+  return s
+end
+
+def build(name, params)
+  File.open(DIR / name, "w") do [fp]
+    fp.write(eval_page(name, params))
+  end
+end
+
+PARAMS = {
+  'mail_address: "SumiTomohiko@neko-daisuki.ddo.jp",
+  'site_title: "SumiTomohiko's Personal Page" }
+make_dirs(DIR)
+build(INDEX, PARAMS)
+PAGES.each() do [page]
+  build(page.path, PARAMS + { 'page_title: page.title })
+end
+
+# vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2

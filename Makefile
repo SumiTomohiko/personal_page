@@ -1,0 +1,3 @@
+
+all:
+	@yog build.yog
