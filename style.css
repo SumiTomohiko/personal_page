@@ -5,8 +5,8 @@ body {
   padding: 0px;
 }
 
-body h1 {
-  padding: 8px;
+body > h1 {
+  text-align: center;
 }
 
 header {
