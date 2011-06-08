@@ -35,6 +35,10 @@ p {
   padding: 0px 8px 0px 8px;
 }
 
+td.numeric {
+  text-align: right;
+}
+
 /**
  * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
  */

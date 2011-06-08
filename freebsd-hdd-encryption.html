@@ -21,13 +21,81 @@
           <tr><td>HDD</td><td>80Gbyte</td></tr>
         </tbody></table>
       </section>
+      <section><h1>OS</h1><p>OS was FreeBSD 8.2.</p></section>
+    </section>
+    <section>
+      <h1>What I Needed</h1>
+      <p>I needed the following tools.</p>
+      <ol>
+        <li>livefs which is CD-ROM burned with
+        FreeBSD-8.2-RELEASE-i386-livefs.iso.</li>
+        <li>disc1 which is CD-ROM burned with
+        FreeBSD-8.2-RELEASE-i386-disc1.iso.</li>
+        <li>Two CD-ROM drives. One was for livefs to boot, second one was for
+        installing system with disc1. Two discs were used at same time. But
+        disc1 could be non CD-ROM media. For example, a USB memory including
+        contents of disc1.</li>
+        <li>One USB memory to save log.</li>
+      </ol>
+    </section>
+    <section>
+      <h1>Overview</h1>
+      <p>I split HDD into two slices.</p>
+      <table>
+        <thead><tr><th>Slice</th><th>Size [Mbyte]</th></tr></thead>
+        <tbody>
+          <tr><td><code>/dev/ad0s1</code></td><td class="numeric">256</td></tr>
+          <tr><td><code>/dev/ad0s2</code></td><td>Rest of All</td></tr>
+        </tbody>
+      </table>
+      <p><code>/dev/ad0s1</code> is for boot. This slice has one partition of
+      UTF2. The partition includes <code>/boot</code> directory and
+      <code>/etc/fstab</code>.</p>
+      <p>I encrypted <code>/dev/ad0s2</code>. This slice has all partitions
+      needed by FreeBSD including swap.</p>
+      <table>
+        <thead>
+          <tr><th>Filesystem</th><th>Size [byte]</th><th>Mounted on</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/dev/ad0s2.eli</code></td>
+            <td class="numeric">XXX</td>
+            <td><code>/</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h1>What I Did</h1>
       <section>
-        <h1>OS</h1>
-        <p>OS was FreeBSD 8.2.</p>
+        <h1>Booted from livefs and Run Fixit</h1>
+      </section>
+      <section>
+        <h1>Started Logging</h1>
+      </section>
+      <section>
+        <h1>Made Slices and Partitions</h1>
+      </section>
+      <section>
+        <h1>Encrypted</h1>
+      </section>
+      <section>
+        <h1>Made Partitions in the Encrypted Slice</h1>
+      </section>
+      <section>
+        <h1>Installed System</h1>
+      </section>
+      <section>
+        <h1>Rebooted and Done</h1>
       </section>
     </section>
     <section>
-      <h1>Plan</h1>
+      <h1>Troubles I Had</h1>
+      <section>
+        <h1><code>fdisk -BI /dev/ad0</code> Didn't Work</h1>
+        <p>Use <code>gpart(8)</code>.</p>
+      </section>
     </section>
     <section>
       <h1>References</h1>
