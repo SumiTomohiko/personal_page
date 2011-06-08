@@ -1,6 +1,15 @@
 
+@font-face {
+  font-family: "bodyfont";
+  /**
+   * GenBkBasR.ttf is licensed under Open Font License. See
+   * http://openfontlibrary.org/font/gentium.
+   */
+  src: url("GenBkBasR.ttf") format("truetype");
+}
+
 body {
-  font-family: serif;
+  font-family: "bodyfont";
   margin: 0px;
   padding: 0px;
 }
