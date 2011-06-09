@@ -28,6 +28,9 @@ def eval_call(name, arg, params)
   if name == "link"
     return "<a href=\"{0}\">{1}</a>".format(arg, find_title(arg))
   end
+  if name == "man"
+    return "<a href=\"http://www.freebsd.org/cgi/man.cgi?query={0}\">{1}</a>".format(arg.slice(0, arg.find("(")), arg)
+  end
   # name must be "include".
   return eval_page(arg, params)
 end
