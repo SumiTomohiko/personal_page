@@ -61,6 +61,10 @@ td.numeric {
   text-align: right;
 }
 
+kbd {
+  color: green;
+}
+
 /**
  * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
  */
