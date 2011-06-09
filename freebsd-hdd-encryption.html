@@ -40,31 +40,72 @@
     </section>
     <section>
       <h1>Overview</h1>
-      <p>I split HDD into two slices.</p>
-      <table>
-        <thead><tr><th>Slice</th><th>Size [Mbyte]</th></tr></thead>
-        <tbody>
-          <tr><td><code>/dev/ad0s1</code></td><td class="numeric">256</td></tr>
-          <tr><td><code>/dev/ad0s2</code></td><td>Rest of All</td></tr>
-        </tbody>
-      </table>
-      <p><code>/dev/ad0s1</code> is for boot. This slice has one partition of
-      UTF2. The partition includes <code>/boot</code> directory and
-      <code>/etc/fstab</code>.</p>
-      <p>I encrypted <code>/dev/ad0s2</code>. This slice has all partitions
-      needed by FreeBSD including swap.</p>
-      <table>
-        <thead>
-          <tr><th>Filesystem</th><th>Size [byte]</th><th>Mounted on</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>/dev/ad0s2.eli</code></td>
-            <td class="numeric">XXX</td>
-            <td><code>/</code></td>
-          </tr>
-        </tbody>
-      </table>
+      <section>
+        <h1>Cryptgraphic Subsystem</h1>
+        <p>I used geli without master keys. Only a passphrase was given.</p>
+      </section>
+      <section>
+        <h1>Slices and Partitions</h1>
+        <p>I split HDD into two slices.</p>
+        <table>
+          <thead><tr><th>Slice</th><th>Size [Mbyte]</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>/dev/ad0s1</code></td><td class="numeric">256</td>
+            </tr>
+            <tr><td><code>/dev/ad0s2</code></td><td>Rest of All</td></tr>
+          </tbody>
+        </table>
+        <p><code>/dev/ad0s1</code> is for boot. This slice was not encrypted,
+        and has one partition of UTF2. The partition includes <code>/boot</code>
+        directory and <code>/etc/fstab</code>.</p>
+        <p>I encrypted <code>/dev/ad0s2</code>. This slice has all partitions
+        needed by FreeBSD including swap. Attaching this slice gave a slice of
+        <code>/dev/ad0s2.eli</code>. I made the following partitions in this
+        slice.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Filesystem</th>
+              <th>Type</th>
+              <th>Size [byte]</th>
+              <th>Mounted on</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/dev/ad0s2.elia</code></td>
+              <td>swap</td>
+              <td class="numeric">TODO</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><code>/dev/ad0s2.elib</code></td>
+              <td>UFS2</td>
+              <td class="numeric">TODO</td>
+              <td><code>/</code></td>
+            </tr>
+            <tr>
+              <td><code>/dev/ad0s2.elid</code></td>
+              <td>UFS2</td>
+              <td class="numeric">TODO</td>
+              <td><code>/tmp</code></td>
+            </tr>
+            <tr>
+              <td><code>/dev/ad0s2.elie</code></td>
+              <td>UFS2</td>
+              <td class="numeric">TODO</td>
+              <td><code>/var</code></td>
+            </tr>
+            <tr>
+              <td><code>/dev/ad0s2.elif</code></td>
+              <td>UFS2</td>
+              <td class="numeric">TODO</td>
+              <td><code>/usr</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </section>
     <section>
       <h1>What I Did</h1>
