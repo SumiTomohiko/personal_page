@@ -68,6 +68,8 @@ def build(name, params)
 end
 
 PARAMS = {
+  'blog_url: "http://d.hatena.ne.jp/SumiTomohiko",
+  'github_url: "https://github.com/SumiTomohiko",
   'mail_address: "SumiTomohiko@neko-daisuki.ddo.jp",
   'site_title: "SumiTomohiko's Personal Page" }
 make_dirs(DIR)
@@ -75,7 +77,7 @@ build(INDEX, PARAMS)
 PAGES.each() do [page]
   build(page.path, PARAMS + { 'page_title: page.title })
 end
-FILES = ["style.css", "GenBkBasR.ttf"]
+FILES = ["style.css", "GenBkBasR.ttf", "425-32x32.gif"]
 FILES.each() do [name]
   copy_file(name, DIR / name)
 end
