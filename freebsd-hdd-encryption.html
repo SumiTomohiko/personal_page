@@ -494,9 +494,94 @@ Fixit# <kbd>gpart show</kbd>
       </section>
       <section>
         <h1>Installed System</h1>
+        <p>I mounted filesystems in <code>/dev/ad0s2.eli</code>.</p>
+        <pre><code>Fixit# <kbd>mkdir /mnt3</kbd>
+Fixit# <kbd>cd mnt3</kbd>
+Fixit# <kbd>mkdir root boot</kbd>
+Fixit# <kbd>cd root</kbd>
+Fixit# <kbd>mount /dev/ad0s2.elib .</kbd>
+Fixit# <kbd>mkdir tmp usr var</kbd>
+Fixit# <kbd>mount /dev/ad0s2.elid tmp</kbd>
+Fixit# <kbd>mount /dev/ad0s2.elie var</kbd>
+Fixit# <kbd>mount /dev/ad0s2.elif usr</kbd>
+Fixit# <kbd>df</kbd>
+Filesystem      1K-blocks   Used    Avail Capacity  Mounted on
+/dev/md0             4175   2766     1409    66%    /
+devfs                   1      1        0   100%    /dev
+/dev/cd0           258216 258216        0   100%    /dist
+/dev/da0s1         119688   8468   111220     7%    /mnt
+/dev/ad0s2.elib    126702     10   116556     0%    /mnt3/root
+/dev/ad0s2.elid    253678      4   233380     0%    /mnt3/root/tmp
+/dev/ad0s2.elie   2026030      4  1863944     0%    /mnt3/root/var
+/dev/ad0s2.elif  71754912      4 66014516     0%    /mnt3/root/usr
+</code></pre>
+        <p>And, I mounted the filesystem in <code>/dev/ad0s1a</code> on
+        <code>/mnt3/boot</code>.</p>
+        <pre><code>Fixit# <kbd>cd /mnt3</kbd>
+Fixit# <kbd>mount /dev/ad0s1a boot</kbd>
+Fixit# <kbd>df</kbd>
+Filesystem      1K-blocks   Used    Avail Capacity  Mounted on
+/dev/md0             4175   2766     1409    66%    /
+devfs                   1      1        0   100%    /dev
+/dev/cd0           258216 258216        0   100%    /dist
+/dev/da0s1         119688   8468   111220     7%    /mnt
+/dev/ad0s2.elib    126702     10   116556     0%    /mnt3/root
+/dev/ad0s2.elid    253678      4   233380     0%    /mnt3/root/tmp
+/dev/ad0s2.elie   2026030      4  1863944     0%    /mnt3/root/var
+/dev/ad0s2.elif  71754912      4 66014516     0%    /mnt3/root/usr
+/dev/ad0s1a        253740      4   233438     0%    /mnt3/boot
+</code></pre>
+        <p>I gave disc1 CD-ROM to the PC, and mounted it on <code>/mnt4</code>.
+        It was time to install system with GENERIC kernel.</p>
+        <pre><code>Fixit# <kbd>export DESTDIR=/mnt3/root</kbd>
+Fixit# <kbd>cd /mnt4/</kbd>
+Fixit# <kbd>cd 8.2-RELEASE</kbd>
+Fixit# <kbd>cd base</kbd>
+Fixit# <kbd>./install.sh</kbd>
+You are about to extract the base distribution into /mnt3/root - are you SURE
+you want to do this over your installed system (y/n)? <kbd>y</kbd>
+Fixit# <kbd>cd ../kernels</kbd>
+Fixit# <kbd>./install.sh GENERIC</kbd>
+Fixit# <kbd>cd /mnt3/root/boot</kbd>
+Fixit# <kbd>mv GENERIC kernel</kbd>
+</code></pre>
+        <p>I copied files needed in boot to <code>ad0s1a</code>.</p>
+        <pre><code>Fixit# <kbd>cd /mnt3/root/boot</kbd>
+Fixit# <kbd>cp -a boot /mnt3/boot</kbd>
+</code></pre>
+        <p>I made <code>/etc/fstab</code> in both <code>ad0s1a</code> and
+        <code>ad0s2.elib</code> (I made two <code>fstab</code>).</p>
+        <pre><code>Fixit# <kbd>cd /mnt3/boot</kbd>
+Fixit# <kbd>mkdir etc</kbd>
+Fixit# <kbd>cd etc</kbd>
+Fixit# <kbd>vi fstab</kbd>
+Fixit# <kbd>cp fstab /mnt3/root/etc/fstab</kbd>
+Fixit# <kbd>cat /mnt3/root/etc/fstab</kbd>
+/dev/ad0s2.elia none swap sw 0 0
+/dev/ad1s2.elib / ufs rw 1 1
+/dev/ad0s2.elid /tmp ufs rw 1 1
+/dev/ad0s2.elie /var ufs rw 1 1
+/dev/ad0s2.elif /usr ufs rw 1 1
+</code></pre>
+        <p>I installed bootcode to <code>ad0</code> and <code>ad0s1</code>.</p>
+        <pre><code>Fixit# <kbd>gpart bootocode -b /mnt3/boot/boot/boot0 ad0</kbd>
+bootcode written to ad0
+Fixit# <kbd>gpart bootcode -b /mnt3/boot/boot/boot ad0s1</kbd>
+bootcode written to ad0s1
+</code></pre>
+          <p>I wrote a setting of geli in <code>loader.conf</code>.</p>
+          <pre><code>Fixit# <kbd>pwd</kbd>
+/mnt3/boot
+Fixit# <kbd>cd boot</kbd>
+Fixit# <kbd>vi loader.conf</kbd>
+Fixit# <kbd>cat loader.conf</kbd>
+geom_eli_load=&quot;YES&quot;
+</code></pre>
       </section>
       <section>
         <h1>Rebooted and Done</h1>
+        <p>I got an encrypted HDD. I rebooted to see FreeBSD working
+        expectedly.</p>
       </section>
     </section>
     <section>
