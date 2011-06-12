@@ -585,16 +585,13 @@ geom_eli_load=&quot;YES&quot;
       </section>
     </section>
     <section>
-      <h1>Troubles I Had</h1>
+      <h1>Supplementations</h1>
       <section>
-        <h1><code>fdisk -BI /dev/ad0</code> Didn't Work</h1>
-        <p>Use <code>gpart(8)</code>.</p>
-      </section>
-      <section>
-        <h1>Sanitising</h1>
-      </section>
-      <section>
-        <h1>Installing from sysinstall</h1>
+        <h1>Sanitizing</h1>
+        <p>It may be better to sanitize HDD by
+        <code>dd if=/dev/random of=/dev/ad0s2</code>. But the HDD had been
+        encrypted by Ubuntu Linux 8.04 previously, so I did not sanitize at this
+        time.</p>
       </section>
     </section>
     <section>
