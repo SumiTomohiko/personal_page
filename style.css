@@ -61,7 +61,13 @@ td.numeric {
   text-align: right;
 }
 
+pre {
+  border: 1px solid;
+  padding: 10px;
+}
+
 kbd {
+  font-weight: bold;
   color: green;
 }
 
