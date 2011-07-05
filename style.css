@@ -2,14 +2,17 @@
 @font-face {
   font-family: "bodyfont";
   /**
-   * GenBkBasR.ttf is licensed under Open Font License. See
-   * http://openfontlibrary.org/font/gentium.
+   * Copyright Information of Inconsolata.otf
+   * Lisence: Open Font Lisence
+   * Author: Raph Levien
+   * URL: http://www.levien.com/type/myfonts/inconsolata.html
    */
-  src: url("GenBkBasR.ttf") format("truetype");
+  src: url("Inconsolata.otf") format("opentype");
 }
 
 body {
   font-family: "bodyfont";
+  font-size: 20px;
   margin: 0px;
   padding: 0px;
 }
