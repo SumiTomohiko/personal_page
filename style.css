@@ -70,8 +70,13 @@ pre {
 }
 
 kbd {
+  font-family: "bodyfont";
   font-weight: bold;
   color: green;
+}
+
+code {
+  font-family: "bodyfont";
 }
 
 /**
