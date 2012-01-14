@@ -42,6 +42,10 @@ section {
   padding: 0px 8px 0px 8px;
 }
 
+div.centering {
+  text-align: center;
+}
+
 p {
   padding: 0px 8px 0px 8px;
 }
