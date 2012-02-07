@@ -17,7 +17,7 @@ def eval_var(name, params)
 end
 
 def find_title(path)
-  PAGES.each() do [page]
+  PAGES.each() do |page|
     if page.path == path
       return page.title
     end
@@ -53,7 +53,7 @@ end
 
 def eval_page(tmpl, params)
   s = ""
-  File.open(tmpl) do [fp]
+  File.open(tmpl) do |fp|
     while (line = fp.readline()) != nil
       s << eval(line, params)
     end
@@ -62,7 +62,7 @@ def eval_page(tmpl, params)
 end
 
 def build(name, params)
-  File.open(DIR / name, "w") do [fp]
+  File.open(DIR / name, "w") do |fp|
     fp.write(eval_page(name, params))
   end
 end
@@ -74,11 +74,11 @@ PARAMS = {
   'site_title: "SumiTomohiko's Personal Page" }
 make_dirs(DIR)
 build(INDEX, PARAMS)
-PAGES.each() do [page]
+PAGES.each() do |page|
   build(page.path, PARAMS + { 'page_title: page.title })
 end
 FILES = ["avatar.png", "style.css", "Inconsolata.otf", "425-32x32.gif"]
-FILES.each() do [name]
+FILES.each() do |name|
   copy_file(name, DIR / name)
 end
 
