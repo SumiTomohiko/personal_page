@@ -65,6 +65,10 @@ kbd {
   color: green;
 }
 
+figure {
+  text-align: center;
+}
+
 /**
  * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
  */
