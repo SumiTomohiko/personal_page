@@ -77,7 +77,7 @@ build(INDEX, PARAMS)
 PAGES.each() do |page|
   build(page.path, PARAMS + { 'page_title: page.title })
 end
-FILES = ["avatar.png", "style.css", "Inconsolata.otf", "425-32x32.gif"]
+FILES = ["avatar.png", "default.css", "425-32x32.gif"]
 FILES.each() do |name|
   copy_file(name, DIR / name)
 end

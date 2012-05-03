@@ -1,18 +1,5 @@
 
-@font-face {
-  font-family: "bodyfont";
-  /**
-   * Copyright Information of Inconsolata.otf
-   * Lisence: Open Font Lisence
-   * Author: Raph Levien
-   * URL: http://www.levien.com/type/myfonts/inconsolata.html
-   */
-  src: url("Inconsolata.otf") format("opentype");
-}
-
 body {
-  font-family: "bodyfont";
-  font-size: 20px;
   margin: 0px;
   padding: 0px;
 }
@@ -74,13 +61,8 @@ pre {
 }
 
 kbd {
-  font-family: "bodyfont";
   font-weight: bold;
   color: green;
-}
-
-code {
-  font-family: "bodyfont";
 }
 
 /**
