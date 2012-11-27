@@ -26,18 +26,8 @@ header a:link, header a:visited {
 }
 
 section {
-  margin: 10px 0px;
+  margin: 0px;
   padding: 0px 8px;
-}
-
-section > section {
-  background-image: url("background.png");
-  padding: 10px 20px;
-}
-
-section > section > h1 {
-  font-size: xx-large;
-  margin: 0px 10px 10px 10px;
 }
 
 div.centering {
