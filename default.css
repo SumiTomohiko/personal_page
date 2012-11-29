@@ -26,18 +26,28 @@ header a:link, header a:visited {
 }
 
 section {
-  margin: 10px 0px;
+  margin: 10px 10px;
   padding: 0px 8px;
 }
 
-section > section {
+section#software > h1 {
+  border-style: none;
+}
+
+section#software > section {
   background-image: url("background.png");
   padding: 10px 20px;
 }
 
-section > section > h1 {
+section#software > section > h1 {
+  border-style: none;
   font-size: xx-large;
   margin: 0px 10px 10px 10px;
+}
+
+section > h1 {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 div.centering {
