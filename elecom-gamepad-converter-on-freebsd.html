@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    @include("head_common.html")@
+    <title>@site_title@ - @page_title@</title>
+  </head>
+  <body>
+    @include("header.html")@
+    <h1>@page_title@</h1>
+    <section>
+      <h1>Description</h1>
+      <p><a href="http://www2.elecom.co.jp/peripheral/gamepad/jc-ps101u/">ELECOM JC-PS101UBK</a> is a gamepad converter of PlayStation controller to USB.</p>
+      <figure><img src="jc-ps101ubk_1.jpg"/></figure>
+      <figure><img src="jc-ps101ubk_2.jpg"/></figure>
+      <figure><img src="jc-ps101ubk_3.jpg"/></figure>
+      <p>This article describes what I did to use this on FreeBSD/amd64. X.org
+      version is 7.5.2. I used mapping of X.org. It means that I used the PS2
+      controller as a keyboard. FreeBSD has a joystick device driver
+      (<a href="http://www.freebsd.org/cgi/man.cgi?query=joy&apropos=0&sektion=4&manpath=FreeBSD+9.0-RELEASE&arch=default&format=html">joy(4)</a>, it seems for
+      analog joypads. And there is <a href="http://forums.pcbsd.org/archive/index.php/t-11499.html">ujoy device driver</a> for USB joypads...?), but I do not
+      know about it.</p>
+    </section>
+    <section>
+      <h1>dmesg</h1>
+      <p>When I connected the converter to my USB port, dmesg told:</p>
+      <pre>ugen1.3: &lt;WiseGroup.,Ltd&gt; at usbus1
+uhid2: &lt;WiseGroup.,Ltd JC-PS101U, class 0/0, rev 1.00/2.88, addr 3&gt; on usbus1
+</pre>
+      <p>I needed sufix number of <code>uhid<var>x</var></code>.</p>
+    </section>
+    <section>
+      <h1>xorg.conf</h1>
+      <section>
+        <h1>ServerLayout</h1>
+        <p>I added the following line in <code>ServerLayout</code> section of
+        <code>/etc/X11/xorg.conf</code>.</p>
+        <pre>InputDevice    &quot;Gamepad&quot; &quot;SendCoreEvents&quot;
+</pre>
+      </section>
+      <section>
+        <h1>InputDevice</h1>
+        <p>I added new <code>InputDevice</code> section named
+        &quot;Gamepad&quot; with indicating joystick driver and path of
+        <code>/dev/uhid2</code> which dmesg show.</p>
+        <pre>    Driver      &quot;joystick&quot;
+    Option      &quot;Path&quot; &quot;/dev/uhid2&quot;
+    Option      &quot;Device&quot; &quot;/dev/uhid2&quot;
+    Option      &quot;DebugLevel&quot; &quot;99&quot;
+</pre>
+
+        <p>Next step is mapping buttons/sticks of the PS2 controller. At first,
+        I describe about sticks mapping.</p>
+        <section>
+          <h1>Axis Mappings</h1>
+          <p>PS2 controllers have two sticks and one + key. In X, each stick/key
+          is assigned to two axises. One axis is for left/right, the other is
+          for up/down.</p>
+          <p>ANALOG button of controllers changes assignment. For example, when
+          ANALOG is on, the left stick is assigned to axis 1 and 2 (left/right
+          is assigned to axis 1, up/down is assigned to axis 2). In case of off
+          ANALOG, the left stick does not work. The following table summarized
+          it.</p>
+          <table>
+            <tbody>
+              <tr><td></td><td>ANALOG on</td><td>ANALOG off</td></tr>
+              <tr>
+                <td>Left stick (left/right)</td><td>1</td><td>Not available</td>
+              </tr>
+              <tr>
+                <td>Left stick (up/down)</td><td>2</td><td>Not available</td>
+              </tr>
+              <tr>
+                <td>Right stick (left/right)</td>
+                <td>3</td>
+                <td>Not available</td>
+              </tr>
+              <tr>
+                <td>Right stick (up/down)</td><td>4</td><td>Not available</td>
+              </tr>
+              <tr><td>+ (left/right)</td><td>Not available</td><td>1</td></tr>
+              <tr><td>+ (up/down)</td><td>Not available</td><td>2</td></tr>
+            </tbody>
+          </table>
+          <figure>
+            <img src="ps2_analog_on.png"/>
+            <figcaption>When ANALOG is on</figcaption>
+          </figure>
+          <figure>
+            <img src="ps2_analog_off.png"/>
+            <figcaption>When ANALOG is off</figcaption>
+          </figure>
+          <p>I assigned axis 1 and 3 to left/right key of a keyboard. And I
+          assigned axis 2 and 4 to up/down key. Settings for it in xorg.conf is:
+          </p>
+          <pre>    Option      &quot;MapAxis1&quot; &quot;mode=accelerated amplify=100% keylow=100 keyhigh=102 axis=key&quot;
+    Option      &quot;MapAxis2&quot; &quot;mode=accelerated amplify=100% keylow=98 keyhigh=104 axis=key&quot;
+    Option      &quot;MapAxis3&quot; &quot;mode=accelerated amplify=100% keylow=100 keyhigh=102 axis=key&quot;
+    Option      &quot;MapAxis4&quot; &quot;mode=accelerated amplify=100% keylow=98 keyhigh=104 axis=key&quot;
+</pre>
+          <p><code>mode=accelerated amplify=100%</code> indicates that X does
+          not repeat key input (X repeats keydown/keyup if without
+          <code>amplify=100%</code>). <code>keylow</code> and
+          <code>keyhigh</code> have keycodes which is seen by
+          <code>xmodmap -pk</code>. For more details about the above options,
+          you can read
+          <a href="http://www.freebsd.org/cgi/man.cgi?query=joystick&sektion=4x&apropos=0&manpath=FreeBSD+9.0-RELEASE+and+Ports">manpage of joystick(4x)</a>.</p>
+          <p>Additionally, I disabled axis 5 and 6. When they were alive, the
+          mouse cursor moved unexpectedlly.</p>
+          <pre>    Option	&quot;MapAxis5&quot; &quot;mode=none&quot;
+    Option	&quot;MapAxis6&quot; &quot;mode=none&quot;
+</pre>
+        </section>
+        <section>
+          <h1>Button Mappings</h1>
+          <p>The following figure shows button assignments in X. Pushing sticks
+          caused nothing.</p>
+          <figure><img src="ps2_buttons.png"/></figure>
+          <p>I assigned unduplicated keycode to each button.</p>
+          <pre>    Option      &quot;MapButton1&quot; &quot;key=38&quot;	# key of &quot;a&quot;
+    Option      &quot;MapButton2&quot; &quot;key=39&quot;	# key of &quot;s&quot;
+    Option      &quot;MapButton3&quot; &quot;key=40&quot;	# key of &quot;d&quot;
+    Option      &quot;MapButton4&quot; &quot;key=41&quot;	# key of &quot;f&quot;
+    Option      &quot;MapButton5&quot; &quot;key=42&quot;	# key of &quot;g&quot;
+    Option      &quot;MapButton6&quot; &quot;key=43&quot;	# key of &quot;h&quot;
+    Option      &quot;MapButton7&quot; &quot;key=44&quot;	# key of &quot;j&quot;
+    Option      &quot;MapButton8&quot; &quot;key=45&quot;	# key of &quot;k&quot;
+    Option      &quot;MapButton9&quot; &quot;key=46&quot;	# key of &quot;l&quot;
+    Option      &quot;MapButton10&quot; &quot;key=47&quot;	# key of &quot;;&quot;
+</pre>
+        </section>
+        <section>
+          <h1>Summary</h1>
+          <p>Final form of <code>InputDevice</code> is:</p>
+          <pre>Section &quot;InputDevice&quot;
+    Identifier  &quot;Gamepad&quot;
+    Driver      &quot;joystick&quot;
+    Option      &quot;Path&quot; &quot;/dev/uhid2&quot;
+    Option      &quot;Device&quot; &quot;/dev/uhid2&quot;
+    Option      &quot;DebugLevel&quot; &quot;99&quot;
+
+    Option      &quot;MapButton1&quot; &quot;key=38&quot;	# key of &quot;a&quot;
+    Option      &quot;MapButton2&quot; &quot;key=39&quot;	# key of &quot;s&quot;
+    Option      &quot;MapButton3&quot; &quot;key=40&quot;	# key of &quot;d&quot;
+    Option      &quot;MapButton4&quot; &quot;key=41&quot;	# key of &quot;f&quot;
+    Option      &quot;MapButton5&quot; &quot;key=42&quot;	# key of &quot;g&quot;
+    Option      &quot;MapButton6&quot; &quot;key=43&quot;	# key of &quot;h&quot;
+    Option      &quot;MapButton7&quot; &quot;key=44&quot;	# key of &quot;j&quot;
+    Option      &quot;MapButton8&quot; &quot;key=45&quot;	# key of &quot;k&quot;
+    Option      &quot;MapButton9&quot; &quot;key=46&quot;	# key of &quot;l&quot;
+    Option      &quot;MapButton10&quot; &quot;key=47&quot;	# key of &quot;;&quot;
+
+    Option      &quot;MapAxis1&quot; &quot;mode=accelerated amplify=100% keylow=100 keyhigh=102 axis=key&quot;
+    Option      &quot;MapAxis2&quot; &quot;mode=accelerated amplify=100% keylow=98 keyhigh=104 axis=key&quot;
+    Option      &quot;MapAxis3&quot; &quot;mode=accelerated amplify=100% keylow=100 keyhigh=102 axis=key&quot;
+    Option      &quot;MapAxis4&quot; &quot;mode=accelerated amplify=100% keylow=98 keyhigh=104 axis=key&quot;
+    Option	&quot;MapAxis5&quot; &quot;mode=none&quot;
+    Option	&quot;MapAxis6&quot; &quot;mode=none&quot;
+EndSection
+</pre>
+        </section>
+      </section>
+    </section>
+    <section>
+      <h1>startx</h1>
+      <p>It's all. When I startx'ed, X handled the PS2 controller as an
+      additional keyboard. It was still a keyboard, so games do not detect any
+      joypads.</p>
+      <figure>
+        <img src="SuperTuxKart_controls.png"/>
+        <figcaption>SuperTuxKart does not detect any joypads.</figcaption>
+      </figure>
+      <p>I must configure keyboard settings in games, but it works.</p>
+    </section>
+  </body>
+</html>
+<!--
+vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
+-->

@@ -9,8 +9,10 @@ end
 DIR = "html".to_path()
 INDEX = "index.html".to_path()
 PAGES = [
+  Page.new("freebsd-hdd-encryption.html", "FreeBSD Hard Disk Drive Encryption"),
   Page.new(
-    "freebsd-hdd-encryption.html", "FreeBSD Hard Disk Drive Encryption")]
+    "elecom-gamepad-converter-on-freebsd.html",
+    "ELECOM Gamepad Converter on FreeBSD")]
 
 def eval_var(name, params)
   return params[name.to_sym()]
@@ -78,7 +80,10 @@ PAGES.each() do |page|
   build(page.path, PARAMS + { 'page_title: page.title })
 end
 FILES = ["avatar.png", "background.png", "default.css", "fawm.png",
-  "fpif-top.png", "freebsd-hdd-encryption.css", "425-32x32.gif"]
+  "fpif-top.png", "freebsd-hdd-encryption.css", "jc-ps101ubk_1.jpg",
+  "jc-ps101ubk_2.jpg", "jc-ps101ubk_3.jpg", "ps2_analog_off.png",
+  "ps2_analog_on.png", "ps2_buttons.png", "SuperTuxKart_controls.png",
+  "425-32x32.gif"]
 FILES.each() do |name|
   copy_file(name, DIR / name)
 end
