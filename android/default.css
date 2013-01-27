@@ -1,0 +1,95 @@
+
+body {
+  font-family: serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+body > h1 {
+  text-align: center;
+}
+
+header {
+  background-color: black;
+  margin: 0px;
+}
+
+header h1 {
+  font-size: medium;
+  margin: 0px;
+  text-align: center;
+}
+
+header a:link, header a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  margin: 10px 10px;
+  padding: 0px 8px;
+}
+
+section#software > h1 {
+  border-style: none;
+}
+
+section#software > section {
+  background-image: url("background.png");
+  padding: 10px 20px;
+}
+
+section#software > section > h1 {
+  border-style: none;
+  font-size: xx-large;
+  margin: 0px 10px 10px 10px;
+}
+
+section > h1 {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+div.centering {
+  text-align: center;
+}
+
+p {
+  padding: 0px 8px 0px 8px;
+}
+
+table {
+  border: 1px solid black;
+}
+
+td, th {
+  border: 1px solid black;
+  padding: 3px;
+}
+
+th {
+  background-color: black;
+  color: white;
+}
+
+td.numeric {
+  text-align: right;
+}
+
+pre {
+  border: 1px solid;
+  padding: 10px;
+}
+
+kbd {
+  font-weight: bold;
+  color: green;
+}
+
+figure {
+  text-align: center;
+}
+
+/**
+ * vim: tabstop=2 shiftwidth=2 expandtab softtabstop=2
+ */
