@@ -72,6 +72,7 @@ end
 PARAMS = {
   'blog_url: "http://d.hatena.ne.jp/SumiTomohiko",
   'github_url: "https://github.com/SumiTomohiko",
+  'openclipart_url: "http://openclipart.org/user-detail/SumiTomohiko",
   'mail_address: "SumiTomohiko@neko-daisuki.ddo.jp",
   'site_title: "SumiTomohiko's Personal Page" }
 make_dirs(DIR)
