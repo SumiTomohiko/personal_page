@@ -70,7 +70,7 @@ def build(name, params)
 end
 
 PARAMS = {
-  'yog_dir: "yog/0.26.0",
+  'yog_dir: "yog/doc/0.26.0",
   'repository: "<a href=\"repos/index.html\">the author's repository</a>",
   'blog_url: "http://d.hatena.ne.jp/SumiTomohiko",
   'github_url: "https://github.com/SumiTomohiko",
