@@ -26,8 +26,7 @@ header a:link, header a:visited {
 }
 
 section {
-  margin: 10px 10px;
-  padding: 0px 8px;
+  margin: 8px;
 }
 
 section#software > h1 {
@@ -47,7 +46,12 @@ section#software > section > h1 {
 
 section > h1 {
   border-bottom-style: solid;
+}
+
+section > section > h1 {
+  border-bottom-style: solid;
   border-bottom-width: 1px;
+  padding-left: 4px;
 }
 
 div.centering {
