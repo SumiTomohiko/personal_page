@@ -86,7 +86,7 @@ FILES = ["AnAudioPlayer.png", "avatar.png", "background.png", "default.css",
   "favicon.png", "fawm.png", "fawm-thumbnail.png", "fpif-top.png",
   "freebsd-hdd-encryption.css", "jc-ps101ubk_1.jpg", "jc-ps101ubk_2.jpg",
   "jc-ps101ubk_3.jpg", "ps2_analog_off.png", "ps2_analog_on.png",
-  "ps2_buttons.png", "SuperTuxKart_controls.png", "425-32x32.gif"]
+  "ps2_buttons.png", "SuperTuxKart_controls.png", "425.gif"]
 FILES.each() do |name|
   copy_file(name, DIR / name)
 end
