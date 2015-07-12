@@ -72,7 +72,8 @@ end
 PARAMS = {
   'yog_dir: "yog/doc/0.26.0",
   'repository: "<a href=\"repos/index.html\">the author's repository</a>",
-  'blog_url: "http://SumiTomohiko.hatenablog.com/",
+  'blog_url: "http://SumiTomohiko.wordpress.com/",
+  'blog_old_url: "http://SumiTomohiko.hatenablog.com/",
   'github_url: "https://github.com/SumiTomohiko",
   'openclipart_url: "http://openclipart.org/user-detail/SumiTomohiko",
   'google_play_url: "https://play.google.com/store/apps/developer?id=Tomohiko+Sumi",
